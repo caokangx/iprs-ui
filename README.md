@@ -1,5 +1,9 @@
 # iprs-ui-prodlist
 
+## 缺陷产品识别系统(Injury products Recognition System)UI端
+
+使用Vue全家桶 + Typescript构建
+
 ## Project setup
 ```
 npm install
@@ -24,6 +28,3 @@ npm run test:unit
 ```
 npm run lint
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
