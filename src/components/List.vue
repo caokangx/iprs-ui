@@ -62,7 +62,15 @@ export default Vue.extend({
   props: {
     msg: String
   },
-  data(): ListPageData {
+  components: {
+    Table,
+    Search,
+    Tooltip,
+    Page,
+    Drawer,
+    Button
+  },
+  data() {
     return {
       prodColumns: [
         {
@@ -74,13 +82,18 @@ export default Vue.extend({
       showDrawer: false
     };
   },
-  components: {
-    Table,
-    Search,
-    Tooltip,
-    Page,
-    Drawer,
-    Button
+  methods: {
+    docUrl(docId: string) {
+      return `http://wenshu.court.gov.cn/website/wenshu/181107ANFZ0BXSK4/index.html?docId=${docId}`;
+    },
+    handleChangePage(newPageNumber: number) {
+      this.$store.commit(Constants.mutation.CHANGE_PAGE_NUMBER, newPageNumber);
+      this.$store.dispatch(Constants.action.GET_DOC_LIST);
+    },
+    handleProdContextBtnClick(prodList: Array<any>): void {
+      (this as any).showDrawer = true;
+      (this as any).prodList = prodList;
+    }
   },
   computed: {
     docColumns() {
@@ -124,19 +137,6 @@ export default Vue.extend({
   mounted() {
     this.$store.dispatch(Constants.action.GET_DOC_LIST);
   },
-  methods: {
-    docUrl(docId: string) {
-      return `http://wenshu.court.gov.cn/website/wenshu/181107ANFZ0BXSK4/index.html?docId=${docId}`;
-    },
-    handleChangePage(newPageNumber: number) {
-      this.$store.commit(Constants.mutation.CHANGE_PAGE_NUMBER, newPageNumber);
-      this.$store.dispatch(Constants.action.GET_DOC_LIST);
-    },
-    handleProdContextBtnClick(prodList: Array<any>): void {
-      (this as any).showDrawer = true;
-      (this as any).prodList = prodList;
-    }
-  }
 });
 </script>
 

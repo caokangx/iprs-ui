@@ -1,5 +1,5 @@
 const emptyPagination = {
-  count: 30,
+  count: 0,
   pageSize: 10,
   pageNumber: 1,
 };

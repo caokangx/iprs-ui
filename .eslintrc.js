@@ -20,7 +20,8 @@ module.exports = {
     'comma-dangle': 'off',
     'import/prefer-default-export': 'off',
     'arrow-parens': 'off',
-    'func-names': 'off'
+    'func-names': 'off',
+    'operator-linebreak': 'off'
   },
   overrides: [
     {
