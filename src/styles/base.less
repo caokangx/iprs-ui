@@ -1,0 +1,85 @@
+html,body{
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  height: 100%;
+}
+
+input,
+button {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.btn-base {
+  display: inline-block;
+  margin-bottom: 0;
+  font-weight: 400;
+  text-align: center;
+  vertical-align: middle;
+  touch-action: manipulation;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  line-height: 1.5;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  height: 32px;
+  padding: 0 15px;
+  font-size: 14px;
+  border-radius: 4px;
+  transition: color 0.2s linear, background-color 0.2s linear,
+    border 0.2s linear, box-shadow 0.2s linear;
+  color: #515a6e;
+  background-color: #fff;
+}
+
+.btn-error {
+  .btn-base();
+  border-color: #dcdee2;
+  color: #fff;
+  background-color: #ed4014;
+  border-color: #ed4014;
+  &:hover {
+    color: #fff;
+    background-color: #f16643;
+    border-color: #f16643;
+  }
+  &:active {
+    color: #f2f2f2;
+    background-color: #e13d13;
+    border-color: #e13d13;
+  }
+}
+
+.btn-primary {
+  .btn-base();
+  color: #fff;
+  background-color: #2d8cf0;
+  border-color: #2d8cf0;
+  &:hover {
+    color: #fff;
+    background-color: #57a3f3;
+    border-color: #57a3f3;
+  }
+  &:active {
+    color: #f2f2f2;
+    background-color: #2b85e4;
+    border-color: #2b85e4;
+  }
+}
+
+// tooltip  过长时会发生溢出情况，手动修正
+.ivu-tooltip-inner {
+  white-space: normal!important;
+}

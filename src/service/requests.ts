@@ -1,4 +1,5 @@
-import axios, { AxiosRequestConfig } from 'axios';
+import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+import { ApiMessage } from '@/schema';
 
 const baseRequestConfig: Record<string, any> = {
   method: 'get',
@@ -8,31 +9,28 @@ const baseRequestConfig: Record<string, any> = {
   },
 };
 
-async function get(url: string, param?: Record<string, any>) {
-  const result = await axios({
+async function get<Req, Res>(url: string, params?: Req, config?: Record<string, any>) {
+  const result = await axios.get<Req, AxiosResponse<ApiMessage<Res>>>(url, {
     ...baseRequestConfig,
-    url,
-    param,
+    ...config,
+    params,
   } as AxiosRequestConfig);
   return result;
 }
 
-async function post(url: string, param?: Record<string, any>) {
-  const result = await axios({
+async function post<Req, Res>(url: string, data?: Req, config?: Record<string, any>) {
+  const result = await axios.post<Req, AxiosResponse<ApiMessage<Res>>>(url, data, {
     ...baseRequestConfig,
-    method: 'post',
-    url,
-    param,
+    ...config,
   } as AxiosRequestConfig);
   return result;
 }
 
-async function put(url: string, param?: Record<string, any>) {
-  const result = await axios({
+async function put<Req, Res>(url: string, data?: Record<string, any>,
+  config?: Record<string, any>) {
+  const result = await axios.put<Req, AxiosResponse<ApiMessage<Res>>>(url, data, {
     ...baseRequestConfig,
-    method: 'put',
-    url,
-    param,
+    ...config,
   } as AxiosRequestConfig);
   return result;
 }

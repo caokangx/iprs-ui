@@ -1,7 +1,7 @@
 <template>
   <div class="search-item">
     <span class="search-item-name">{{ name }}</span>
-    <input class="search-item-input" v-model="value"/>
+    <input class="search-item-input" :value="value" @input="$emit('input', $event.target.value)"/>
   </div>
 </template>
 

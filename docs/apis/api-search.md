@@ -49,9 +49,9 @@
     }
   }],
   pagination: {
-    start: Number,
+    pageNumber: Number,
     pageSize: Number,
-    total: Number,
+    count: Number,
   }
 }
 ```

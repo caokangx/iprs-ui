@@ -15,3 +15,8 @@ export default {
   },
 };
 </script>
+<style lang="less">
+.home {
+  height: 100%;
+}
+</style>

@@ -19,6 +19,7 @@ export interface SearchApiRequest {
   pagination: Pagination;
 }
 
+
 export interface SearchApiResponse {
   docList: Array<JudgementDocInfo>;
   pagination: Pagination;
@@ -26,8 +27,9 @@ export interface SearchApiResponse {
 
 export interface JudgementDocInfo {
   docId: string;
-  url: string;
+  url?: string;
   name: string;
+  content: string;
   court: string;
   type: string;
   causeOfAction: string;
@@ -43,10 +45,10 @@ export interface JudgementDocInfo {
   // prodInfo: ProductInfo
 }
 
-interface Pagination {
-  start: number;
+export interface Pagination {
+  pageNumber: number;
   pageSize: number;
-  total?: number;
+  count?: number;
 }
 // interface ProductInfo {
 
