@@ -8,7 +8,7 @@ export interface SearchApiRequest {
     type?: string;
     causeOfAction?: string;
     processing?: string;
-    date?: {
+    publishDate?: {
       start?: TimeStamp;
       end?: TimeStamp;
     };

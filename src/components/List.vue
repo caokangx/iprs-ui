@@ -1,6 +1,11 @@
 <template>
   <div class="page-wrapper">
     <Search class="search-area"></Search>
+    <TokenContainer
+      class="token-container"
+      @on-close="handleTokenDelete"
+      :tokens="tokens"
+    ></TokenContainer>
     <Table
       :loading="searchingFlag"
       highlight-row
@@ -13,6 +18,9 @@
         <Tooltip transfer placement="right" :content="row.name">
           <a class="case-name" target="_blank" :href="docUrl(row.docId)">{{ row.name }}</a>
         </Tooltip>
+      </template>
+      <template slot-scope="{ row }" slot="publishDate">
+        <p>{{ publishDate(row.publishDate) }}</p>
       </template>
       <template slot-scope="{ row }" slot="productList">
         <Button type="primary" @click="handleProdContextBtnClick(row.prodList)">
@@ -46,7 +54,10 @@ import {
 } from 'view-design';
 import Search from './Search.vue';
 import _ from 'lodash';
+import moment from 'moment';
 import Constants from '../store/constants';
+import { TimeStamp } from '../schema';
+import TokenContainer from './token/TokenContainer.vue';
 
 // function getEmptySearchPayload() {
 
@@ -68,7 +79,8 @@ export default Vue.extend({
     Tooltip,
     Page,
     Drawer,
-    Button
+    Button,
+    TokenContainer
   },
   data() {
     return {
@@ -86,6 +98,9 @@ export default Vue.extend({
     docUrl(docId: string) {
       return `http://wenshu.court.gov.cn/website/wenshu/181107ANFZ0BXSK4/index.html?docId=${docId}`;
     },
+    publishDate(date: TimeStamp) {
+      return moment(date).format('YYYY-MM-DD');
+    },
     handleChangePage(newPageNumber: number) {
       this.$store.commit(Constants.mutation.CHANGE_PAGE_NUMBER, newPageNumber);
       this.$store.dispatch(Constants.action.GET_DOC_LIST);
@@ -93,6 +108,9 @@ export default Vue.extend({
     handleProdContextBtnClick(prodList: Array<any>): void {
       (this as any).showDrawer = true;
       (this as any).prodList = prodList;
+    },
+    handleTokenDelete(data = {}) {
+      this.$store.commit(Constants.mutation.DELETE_SEARCH_ITEM_VALUE, data);
     }
   },
   computed: {
@@ -132,11 +150,16 @@ export default Vue.extend({
     },
     pagination() {
       return this.$store.state.pagination;
+    },
+    tokens() {
+      let { searchItem } = this.$store.getters;
+      searchItem = _.omitBy(searchItem, item => _.isEmpty(item.value));
+      return searchItem;
     }
   },
   mounted() {
     this.$store.dispatch(Constants.action.GET_DOC_LIST);
-  },
+  }
 });
 </script>
 
@@ -146,10 +169,10 @@ export default Vue.extend({
   height: 100%;
   display: flex;
   flex-direction: column;
-  // justify-content: space-between;
 
-  .search-area {
-    // margin: 20px 0 100px;
+  .token-container {
+    min-height: 45px;
+    padding-bottom: 5px;
   }
 
   .case-name {

@@ -1,3 +1,5 @@
+import { DocFieldType } from '@/schema';
+
 export default {
   name: {
     name: '案件名称',
@@ -49,6 +51,14 @@ export default {
     value: '',
     show: true,
     search: false
+  },
+  publishDate: {
+    name: '发布日期',
+    value: {},
+    show: true,
+    search: true,
+    type: DocFieldType.Date,
+    slot: 'publishDate'
   },
   prodList: {
     name: '产品型号列表',

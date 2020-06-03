@@ -5,7 +5,7 @@ export default {
   type: '',
   causeOfAction: '',
   processing: '',
-  date: {
+  publishDate: {
     start: '',
     end: '',
   },

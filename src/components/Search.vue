@@ -1,8 +1,13 @@
 <template>
   <div class="search-wrapper">
-    <Input @on-enter="handleSearch" placeholder="请输入查询内容..."
-      autofocus v-model="searchItem.content.value"
-      size="large" class="search-input">
+    <Input
+      @on-enter="handleSearch"
+      placeholder="请输入查询内容..."
+      autofocus
+      v-model="searchItem.content.value"
+      size="large"
+      class="search-input"
+    >
       <div class="search-input-wrapper" slot="prepend">
         <Button
           @click="toggleAdvancedSearch"
@@ -20,6 +25,7 @@
                 v-bind:key="key"
                 v-for="(item, key) in searchItem"
                 v-bind:name="item.name"
+                v-bind:type="(item.type ? item.type : DocFieldType.String)"
               />
             </div>
             <div>
@@ -29,8 +35,12 @@
           </div>
         </transition>
       </div>
-      <Button @click="handleSearch" class="search-input-btn" slot="append"
-        icon="ios-search"></Button>
+      <Button
+        @click="handleSearch"
+        class="search-input-btn"
+        slot="append"
+        icon="ios-search"
+      ></Button>
     </Input>
   </div>
 </template>
@@ -41,13 +51,14 @@ import { Input, Button } from 'view-design';
 import SearchInput from './SearchInput.vue';
 import _ from 'lodash';
 import Constants from '../store/constants';
+import { DocFieldType } from '../schema';
 
 export default Vue.extend({
   name: 'Search',
   components: {
     Input,
     Button,
-    SearchInput
+    SearchInput,
     // Icon,
   },
   methods: {
@@ -69,15 +80,16 @@ export default Vue.extend({
     }
   },
   computed: {
-    searchItem() {
-      let { searchItem } = this.$store.state;
-      searchItem = _.omitBy(searchItem, item => item.search === false);
-      return searchItem;
+    DocFieldType() {
+      return DocFieldType;
     },
+    searchItem() {
+      return this.$store.getters.searchItem;
+    }
   },
   data() {
     return {
-      hide: true
+      hide: true,
     };
   },
   watch: {
@@ -97,7 +109,7 @@ export default Vue.extend({
 
 <style lang="less">
 .search-wrapper {
-  margin: 20px 20% 50px;
+  margin: 20px 20% 10px;
   // width: 60%;
   display: flex;
   justify-content: center;
@@ -107,7 +119,7 @@ export default Vue.extend({
       width: 530px;
       position: absolute;
       background: #f8f8f9;
-      z-index: 10;
+      z-index: 15;
       left: 0;
       top: 40px;
       border: 1px solid rgb(214, 214, 214);
@@ -155,5 +167,9 @@ export default Vue.extend({
 }
 .advanced-search-btn {
   margin: 10px 4px;
+}
+
+.advanced-datepicker-wrapper {
+  font-size: 14px;
 }
 </style>

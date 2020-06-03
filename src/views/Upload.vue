@@ -31,6 +31,7 @@ const FILE_ERROR_MESSAGE = 'error file, please upload correct file endwith ".csv
 const FILE_CSV_SUFFIX = '.csv';
 const FILE_CSV_TYPENAME = 'csv';
 const UPLOADING_MESSAGE = 'uploading, please wait in patience';
+const MAX_FILE_SIZE = 1024 * 1024 * 2;
 
 export default {
   name: 'Upload',
@@ -46,11 +47,19 @@ export default {
   },
   methods: {
     handleUploadingProgress(event, file) {
-      const { uid, name } = file;
-      this.uploadingCb[uid] = this.$Message.loading({
-        content: `${name} 正在上传并分析，请耐心等候...`,
-        duration: 0
-      });
+      const { uid, name, size } = file;
+      let content;
+      if (!this.uploadingCb[uid]) {
+        if (size > MAX_FILE_SIZE) {
+          content = `${name} 正在上传并分析，请耐心等候...`;
+        } else {
+          content = `${name}正在上传并分析，因文件较大可能需要数分钟，请耐心等候...`;
+        }
+        this.uploadingCb[uid] = this.$Message.loading({
+          content,
+          duration: 0
+        });
+      }
     },
     handleUploadingSuccess({ msg }, file) {
       const { uid, name } = file;
@@ -60,11 +69,11 @@ export default {
         content: `${name} 上传成功，${msg}`
       });
     },
-    handleUploadingError({ msg }, file) {
+    handleUploadingError(error, { msg = '' } = {}, file) {
       const { uid, name } = file;
       this.uploadingCb[uid]();
       this.$Message.error({
-        content: `${name} 上传成功，${msg}`
+        content: `${name} 上传失败。${msg}`
       });
     },
     async handleUploading() {

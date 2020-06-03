@@ -13,15 +13,15 @@ const routes: Array<RouteConfig> = [
     component: Home,
   },
   {
-    path: '/notFound',
-    name: 'NotFound',
-    component: NotFound,
-  },
-  {
     path: '/upload',
     name: 'Upload',
     component: Upload
-  }
+  },
+  {
+    path: '*',
+    name: 'NotFound',
+    component: NotFound,
+  },
 ];
 
 const router = new VueRouter({
